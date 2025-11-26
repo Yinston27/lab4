@@ -58,17 +58,17 @@ def return_list(items, table, return_iterator, max_weight, required_item, basic_
 
     item_idx, limit_weight = len(items)-1, max_weight-1
     negative_point = 0
-    d = [0 for i in range(len(items))]
+    order_of_items = [0 for i in range(len(items))]
     for i, j in return_iterator:
-        d[i] = j
+        order_of_items[i] = j
 
     while item_idx >= 0:
-        weight = items[d[item_idx]]['weight']
-        price = items[d[item_idx]]['price']
+        weight = items[order_of_items[item_idx]]['weight']
+        price = items[order_of_items[item_idx]]['price']
         if max_weight > 0:
             if item_idx != 0 and table[item_idx-1][limit_weight] != table[item_idx][limit_weight] or (item_idx == 0 and table[item_idx][limit_weight] > 0):
                 for i in range(weight):
-                    prev_bag.append(d[item_idx])
+                    prev_bag.append(order_of_items[item_idx])
                 max_weight -= weight
                 basic_point += price
                 limit_weight -= weight
@@ -92,4 +92,4 @@ if __name__ == '__main__':
     res = gen_memo_table(item, WIDTH*LENGTH)
     # for i in res[1]:
     #     print(i)
-    return_list(res[0], res[1], res[2], res[3], res[4], res[5], res[6])
+    return_list(*res)
